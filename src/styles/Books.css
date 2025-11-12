@@ -1,0 +1,186 @@
+.books-page {
+  text-align: center;
+  padding: 2rem 1rem 4rem;
+  background-color: var(--page-bg);
+  color: var(--ink);
+}
+
+.books-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2.4rem;
+  color: var(--accent-ink);
+  margin-bottom: 0.5rem;
+}
+
+.books-subtitle {
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  margin-bottom: 2.5rem;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.book-card {
+  perspective: 1000px;
+  cursor: pointer;
+  width: 230px;
+  height: 370px;
+  transition: transform 0.6s ease;
+}
+
+.book-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.book-card.flipped .book-card-inner {
+  transform: rotateY(180deg);
+}
+
+.book-card-front,
+.book-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: #fff9f4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.book-card-front img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.book-card-front h3 {
+  font-size: 1.1rem;
+  color: var(--accent-ink);
+}
+
+.book-card-front .author {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.book-card-front .price {
+  font-weight: 600;
+  margin-top: 0.2rem;
+  color: var(--accent);
+}
+
+.add-btn {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: center;
+  margin-top: 0.5rem;
+}
+
+.add-btn:hover {
+  background-color: #a07452;
+}
+
+.book-card-back {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  text-align: center;
+}
+
+.book-card-back h3 {
+  font-size: 1.2rem;
+  color: var(--accent-ink);
+  margin-bottom: 0.5rem;
+}
+
+.book-card-back p {
+  font-size: 0.9rem;
+  line-height: 1.3rem;
+  color: var(--ink-soft);
+}
+
+.back-btn {
+  margin-top: 1rem;
+  align-self: center;
+}
+
+.checkout-section {
+  margin-top: 3rem;
+}
+
+.checkout-btn {
+  background-color: var(--accent);
+  color: white;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.checkout-btn:hover {
+  background-color: #a07452;
+}
+.books-tip {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

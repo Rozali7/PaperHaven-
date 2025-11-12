@@ -1,0 +1,31 @@
+.contact .grid{ display:grid; gap:24px; grid-template-columns:1.4fr 1fr }
+.contact .muted{ color:var(--ink-soft); margin:.4rem 0 1rem }
+
+.form{ padding:16px; display:grid; gap:12px }
+.form label{ display:grid; gap:.4rem; font-weight:600 }
+.form input, .form textarea{
+  border:1px solid var(--muted); border-radius:10px; padding:.65rem .8rem; outline:none;
+  background:#fff; color:var(--ink);
+}
+.form input:focus, .form textarea:focus{ box-shadow:0 0 0 4px var(--ring) }
+
+.form .row{ display:flex; align-items:center; gap:12px; margin-top:6px }
+.thanks{ color:var(--accent-ink); background:var(--muted); padding:.35rem .7rem; border-radius:999px }
+
+.illust{ display:flex; align-items:center; justify-content:center; padding:22px }
+.paper{
+  width:100%; height:280px; border-radius:14px; background:linear-gradient(180deg,#fff,#faf6f0);
+  border:1px solid var(--muted); position:relative; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.25rem;
+}
+.paper .fold{
+  position:absolute; right:0; top:0; width:56px; height:56px; background:linear-gradient(135deg,#fff 0%, #eee 60%, #ddd 100%);
+  border-bottom-left-radius:12px; border-left:1px solid var(--muted); border-bottom:1px solid var(--muted);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+@media (max-width:900px){ .contact .grid{ grid-template-columns:1fr } .illust{ order:-1 } }
+
+
+
+

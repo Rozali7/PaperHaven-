@@ -1,0 +1,175 @@
+.hero {
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.9)
+    ),
+    url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80")
+      center/cover no-repeat;
+  text-align: center;
+  padding: 5rem 2rem;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid #e3d8cc;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 0.8rem;
+  color: #4b3621;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #6f5b45;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn {
+  background-color: #8b5e3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-family: Georgia, serif;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #a7764d;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #8b5e3c;
+  border: 1px solid #8b5e3c;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-family: Georgia, serif;
+  transition: all 0.25s ease;
+}
+
+.btn-outline:hover {
+  background: #f4e9df;
+}
+
+/* ---- auth modal ---- */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+
+.auth-modal {
+  width: min(520px, 92vw);
+  background: #fffdfa;
+  border: 1px solid #e8ddd2;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(75, 54, 33, 0.2);
+  padding: 1.2rem 1.2rem 1.6rem;
+}
+
+.auth-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.auth-header h3 {
+  color: #4b3621;
+  margin: 0;
+}
+
+.auth-close {
+  background: transparent;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: #8b5e3c;
+  cursor: pointer;
+}
+
+.auth-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.auth-form label {
+  color: #6f5b45;
+  font-size: 0.95rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.auth-form input {
+  border: 1px solid #cdb8a5;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  font-family: Georgia, serif;
+  outline: none;
+}
+
+.auth-form input:focus {
+  border-color: #8b5e3c;
+  box-shadow: 0 0 0 3px rgba(139, 94, 60, 0.15);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.auth-switch {
+  text-align: center;
+  margin: 0.3rem 0 0;
+  color: #6f5b45;
+}
+
+.linklike {
+  background: none;
+  border: none;
+  color: #8b5e3c;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.linklike:hover {
+  color: #a7764d;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
