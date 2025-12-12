@@ -1,63 +1,24 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate, Link } from "react-router-dom";
 import "../styles/Home.css";
 
-export default function Home() {
+export default function Home({ user, onLogout }) {
   const navigate = useNavigate();
-  const [authOpen, setAuthOpen] = useState(false);
-  const [authMode, setAuthMode] = useState("signin");
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirm: "",
-    phone: "",
-  });
 
-  const openAuth = (mode) => {
-    setAuthMode(mode);
-    setAuthOpen(true);
-  };
+const bookImages = [
+  // The Great Gatsby
+  "https://m.media-amazon.com/images/I/81af+MCATTL._AC_UF1000,1000_QL80_.jpg",
 
-  const closeAuth = () => {
-    setAuthOpen(false);
-    setForm({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirm: "",
-      phone: "",
-    });
-  };
+  // The Alchemist
+  "https://m.media-amazon.com/images/I/71aFt4+OTOL._AC_UF1000,1000_QL80_.jpg",
 
-  const handleChange = (e) =>
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  // Atomic Habits
+  "https://m.media-amazon.com/images/I/81wgcld4wxL._AC_UF1000,1000_QL80_.jpg",
 
-  const submitSignIn = (e) => {
-    e.preventDefault();
-    if (!form.email || !form.password) {
-      alert("Please enter your email and password.");
-      return;
-    }
-    alert("Signed in successfully (demo).");
-    closeAuth();
-  };
+  // Becoming (Michelle Obama)
+  "https://m.media-amazon.com/images/I/81h2gWPTYJL._AC_UF1000,1000_QL80_.jpg",
+];
 
-  const submitSignUp = (e) => {
-    e.preventDefault();
-    if (!form.firstName || !form.lastName || !form.email || !form.password) {
-      alert("Please fill in all required fields.");
-      return;
-    }
-    if (form.password !== form.confirm) {
-      alert("Passwords do not match.");
-      return;
-    }
-    alert("Account created (demo). You can now sign in.");
-    setAuthMode("signin");
-  };
 
   return (
     <div className="home-page">
@@ -69,160 +30,74 @@ export default function Home() {
             PaperHaven is a calm corner for readers—soft design, curated picks,
             and a gentle flow.
           </p>
-          <div className="actions">
-            <button className="btn" onClick={() => navigate("/books")}>
-              Explore Books
-            </button>
-            <button className="btn-outline" onClick={() => openAuth("signin")}>
-              Sign In / Join
-            </button>
+
+          <div className="hero-actions">
+            {user ? (
+              <>
+                {/* Welcome message when logged in */}
+                <p className="hero-welcome">
+                  Welcome, <strong>{user.name}</strong> 👋
+                </p>
+
+                {/* Explore books */}
+                <button
+                  className="btn primary-btn"
+                  onClick={() => navigate("/books")}
+                >
+                  Explore Books
+                </button>
+
+                {/* Logout */}
+                <button
+                  className="btn ghost-btn"
+                  onClick={onLogout}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                {/* When not logged in: original buttons */}
+                <button
+                  className="btn primary-btn"
+                  onClick={() => navigate("/books")}
+                >
+                  Explore Books
+                </button>
+
+                <div className="hero-auth-buttons">
+                  <Link to="/login" className="btn ghost-btn">
+                    Sign In
+                  </Link>
+                  <Link to="/register" className="btn ghost-btn">
+                    Join
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>
 
-      {/* AUTH MODAL */}
-      {authOpen && (
-        <div className="auth-overlay" onClick={closeAuth}>
-          <div
-            className="auth-modal"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <div className="auth-header">
-              <h3>{authMode === "signin" ? "Sign In" : "Create Account"}</h3>
-              <button className="auth-close" onClick={closeAuth} aria-label="Close">
-                ×
-              </button>
-            </div>
+      {/* ⭐ PROFESSIONAL BOOK SLIDER ⭐ */}
+      <section className="book-slider-section">
+        <h2 className="slider-title">Featured Book Picks</h2>
 
-            {authMode === "signin" ? (
-              <form className="auth-form" onSubmit={submitSignIn}>
-                <label>
-                  Email
-                  <input
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
-                <label>
-                  Password
-                  <input
-                    type="password"
-                    name="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
-                <button type="submit" className="btn">
-                  Sign In
-                </button>
-                <p className="auth-switch">
-                  Don’t have an account?{" "}
-                  <button
-                    type="button"
-                    className="linklike"
-                    onClick={() => setAuthMode("signup")}
-                  >
-                    Create one
-                  </button>
-                </p>
-              </form>
-            ) : (
-              <form className="auth-form" onSubmit={submitSignUp}>
-                <div className="grid-2">
-                  <label>
-                    First name
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={form.firstName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </label>
-                  <label>
-                    Last name
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={form.lastName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </label>
-                </div>
-
-                <label>
-                  Email
-                  <input
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
-
-                <div className="grid-2">
-                  <label>
-                    Password
-                    <input
-                      type="password"
-                      name="password"
-                      value={form.password}
-                      onChange={handleChange}
-                      required
-                    />
-                  </label>
-                  <label>
-                    Confirm password
-                    <input
-                      type="password"
-                      name="confirm"
-                      value={form.confirm}
-                      onChange={handleChange}
-                      required
-                    />
-                  </label>
-                </div>
-
-                <label>
-                  Phone (optional)
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={form.phone}
-                    onChange={handleChange}
-                    placeholder="+961 70 123 456"
-                  />
-                </label>
-
-                <button type="submit" className="btn">
-                  Create Account
-                </button>
-                <p className="auth-switch">
-                  Already have an account?{" "}
-                  <button
-                    type="button"
-                    className="linklike"
-                    onClick={() => setAuthMode("signin")}
-                  >
-                    Sign in
-                  </button>
-                </p>
-              </form>
-            )}
+        <div className="book-slider">
+          <div className="slider-track">
+            {[...bookImages, ...bookImages].map((img, i) => (
+              <div className="book-card" key={i}>
+                <img src={img} alt="Book" />
+              </div>
+            ))}
           </div>
         </div>
-      )}
+      </section>
     </div>
   );
 }
+
+
 
 
 

@@ -9,9 +9,28 @@ import Contact from "./pages/Contact";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import "./styles/theme.css";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
+  // 🛒 Cart state
   const [cartItems, setCartItems] = useState([]);
+
+  // 👤 Auth state (user)
+  const [user, setUser] = useState(() => {
+    const stored = localStorage.getItem("user");
+    return stored ? JSON.parse(stored) : null;
+  });
+
+  const handleLogin = (userData) => {
+    setUser(userData);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+  };
 
   // 🛒 Add item to cart
   const handleAddToCart = (book) => {
@@ -43,15 +62,27 @@ function App() {
 
   return (
     <Router>
-      <Navbar cartCount={cartItems.reduce((sum, item) => sum + item.qty, 0)} />
+      <Navbar
+        cartCount={cartItems.reduce((sum, item) => sum + item.qty, 0)}
+        user={user}
+        onLogout={handleLogout}
+      />
+
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* 👇 pass user and logout to Home */}
+        <Route
+          path="/"
+          element={<Home user={user} onLogout={handleLogout} />}
+        />
+
         <Route
           path="/books"
           element={<Books onAdd={handleAddToCart} />}
         />
+
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+
         <Route
           path="/cart"
           element={
@@ -62,18 +93,37 @@ function App() {
             />
           }
         />
-       <Route
-  path="/checkout"
-  element={<Checkout setCartItems={setCartItems} />}
-/>
 
+        <Route
+          path="/checkout"
+          element={
+            <Checkout
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+            />
+          }
+        />
+
+        {/* Auth routes */}
+        <Route
+          path="/login"
+          element={<Login onLogin={handleLogin} />}
+        />
+        <Route
+          path="/register"
+          element={<Register onLogin={handleLogin} />}
+        />
       </Routes>
+
       <Footer />
     </Router>
   );
 }
 
 export default App;
+
+
+
 
 
 
