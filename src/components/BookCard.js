@@ -1,7 +1,7 @@
 import React from "react";
 import "./../styles/Books.css";
 
-const BookCard = ({ book, onAdd }) => {
+const BookCard = ({ book, onAdd }) => {//book- object contating book data - on add function to add to the cart
   return (
     <div className="book-card">
       <img src={book.image} alt={book.title} />

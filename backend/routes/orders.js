@@ -2,20 +2,10 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
-
-// POST /api/orders
-// Body:
-// {
-//   "name": "Rozali",
-//   "email": "kaissrozali79@gmail.com",
-//   "phone": "70099000",
-//   "address": "Some address",
-//   "totalPrice": 39.97
-// }
 router.post("/", (req, res) => {
-  const { name, email, phone, address, totalPrice } = req.body;
+  const { name, email, phone, address, totalPrice } = req.body;//get the info from backend
 
-  if (!name || !email || !phone || !address || !totalPrice) {
+  if (!name || !email || !phone || !address || !totalPrice) {//handle the error eza ma fawat info 
     return res
       .status(400)
       .json({ message: "All fields and total price are required." });
@@ -24,7 +14,7 @@ router.post("/", (req, res) => {
   const sql =
     "INSERT INTO orders (customer_name, customer_email, customer_phone, customer_address, total_price) VALUES (?, ?, ?, ?, ?)";
 
-  db.query(sql, [name, email, phone, address, totalPrice], (err, result) => {
+  db.query(sql, [name, email, phone, address, totalPrice], (err, result) => {//take the info entered from the user and store in the database 
     if (err) {
       console.error("Error inserting order:", err);
       return res

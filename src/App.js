@@ -14,21 +14,21 @@ import Register from "./pages/Register";
 
 function App() {
   // 🛒 Cart state
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);//stores all items added to cart shared between books,cart,checkout 
 
   // 👤 Auth state (user)
   const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem("user");
+    const stored = localStorage.getItem("user");//check if the user is already logged in 
     return stored ? JSON.parse(stored) : null;
   });
 
   const handleLogin = (userData) => {
-    setUser(userData);
+    setUser(userData);//update user state after login 
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");//clears authentication data 
+    localStorage.removeItem("user");//removes the user 
     setUser(null);
   };
 
@@ -39,7 +39,7 @@ function App() {
       setCartItems(
         cartItems.map((x) =>
           x.id === book.id ? { ...exist, qty: exist.qty + 1 } : x
-        )
+        )//if a book already exist qty+1 , if new book qty:1 
       );
     } else {
       setCartItems([...cartItems, { ...book, qty: 1 }]);
@@ -47,7 +47,7 @@ function App() {
   };
 
   // ➖ Remove one quantity
-  const handleRemoveFromCart = (book) => {
+  const handleRemoveFromCart = (book) => {//this function update the cart safely 
     const exist = cartItems.find((x) => x.id === book.id);
     if (exist.qty === 1) {
       setCartItems(cartItems.filter((x) => x.id !== book.id));
@@ -65,7 +65,7 @@ function App() {
       <Navbar
         cartCount={cartItems.reduce((sum, item) => sum + item.qty, 0)}
         user={user}
-        onLogout={handleLogout}
+        onLogout={handleLogout}//navbar receives dynamic data through props 
       />
 
       <Routes>

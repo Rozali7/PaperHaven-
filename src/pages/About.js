@@ -3,11 +3,13 @@ import "../styles/About.css";
 
 export default function About(){
   const [open, setOpen] = useState("history"); // default open
-
+// track 
   const Item = ({id, title, children}) => (
+    //if its open add class open 
     <div className={`acc ${open===id ? "open":""}`}>
       <button className="acc-head" onClick={()=>setOpen(open===id ? "" : id)}>
         <span>{title}</span>
+        {/* when the user clicks the button if open ->close and vise versa  */}
         <span className="chev">{open===id ? "–" : "+"}</span>
       </button>
       <div className="acc-body">

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";//used to move between pages without reloading 
 import "../styles/Auth.css";
 
-export default function Register({ onLogin }) {
-  const navigate = useNavigate();
+export default function Register({ onLogin }) {//get onlogin from the app.js 
+  const navigate = useNavigate();//allows redirecting the user after login 
 
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
-  });
+  });//stores all info entered by the user 
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ export default function Register({ onLogin }) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault();//prevent page refresh 
     setError("");
 
     // basic frontend validation
@@ -30,14 +30,14 @@ export default function Register({ onLogin }) {
     }
 
     if (form.password !== form.confirmPassword) {
-      setError("Passwords do not match.");
+    //       setError("Passwords do not match.");
       return;
     }
 
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:5000/api/auth/signup", {
+      const res = await fetch("http://localhost:5000/api/auth/signup", {//sends the data to the backend 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -47,7 +47,7 @@ export default function Register({ onLogin }) {
         }),
       });
 
-      const data = await res.json();
+      const data = await res.json();//converts backend response  into javascript 
 
       // If backend sent an error status (400, 409, 500, ...)
       if (!res.ok) {
@@ -62,9 +62,9 @@ export default function Register({ onLogin }) {
 
       if (data.user && data.token) {
         // Case 1: auto-login after signup
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.token);//save login info in the browser 
         localStorage.setItem("user", JSON.stringify(data.user));
-        if (onLogin) onLogin(data.user);
+        if (onLogin) onLogin(data.user);//update user state in app.js 
         navigate("/"); // go home
       } else {
         // Case 2: signup OK, but no token/user in response
@@ -147,7 +147,7 @@ export default function Register({ onLogin }) {
 
         <p className="auth-footer-text">
           Already have an account?{" "}
-          <Link to="/login" className="auth-link">
+          <Link to="/login" className="auth-link"> 
             Sign in instead
           </Link>
         </p>

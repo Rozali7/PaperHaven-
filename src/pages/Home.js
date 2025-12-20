@@ -5,7 +5,7 @@ import "../styles/Home.css";
 export default function Home({ user, onLogout }) {
   const navigate = useNavigate();
 
-const bookImages = [
+const bookImages = [ //display the books 
   // The Great Gatsby
   "https://m.media-amazon.com/images/I/81af+MCATTL._AC_UF1000,1000_QL80_.jpg",
 
@@ -22,7 +22,6 @@ const bookImages = [
 
   return (
     <div className="home-page">
-      {/* HERO SECTION */}
       <section className="hero">
         <div className="hero-content">
           <h1>Find Your Quiet Story</h1>
@@ -35,14 +34,15 @@ const bookImages = [
             {user ? (
               <>
                 {/* Welcome message when logged in */}
+                {/*users come from the backend login response and stored in the app.js*/}
                 <p className="hero-welcome">
                   Welcome, <strong>{user.name}</strong> 👋
                 </p>
 
-                {/* Explore books */}
+                
                 <button
                   className="btn primary-btn"
-                  onClick={() => navigate("/books")}
+                  onClick={() => navigate("/books")}//get to the books page 
                 >
                   Explore Books
                 </button>
@@ -85,7 +85,7 @@ const bookImages = [
 
         <div className="book-slider">
           <div className="slider-track">
-            {[...bookImages, ...bookImages].map((img, i) => (
+            {[...bookImages, ...bookImages].map((img, i) => (// duplicates the image list to create a continous scrolling effect 
               <div className="book-card" key={i}>
                 <img src={img} alt="Book" />
               </div>

@@ -3,9 +3,9 @@ import { useNavigate, Link } from "react-router-dom";
 import "../styles/Auth.css";
 
 function Login({ onLogin }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState("");//stores the email entered by the user 
+  const [password, setPassword] = useState("");// ""
+  const [error, setError] = useState("");//stores if any error occurs from the backend 
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -16,13 +16,13 @@ function Login({ onLogin }) {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
+      const res = await fetch("http://localhost:5000/api/auth/login", {// sends email and password to the backend 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      const data = await res.json();//converts backend response into javascprit 
 
       if (!res.ok) {
         // backend gave an error, show it
@@ -30,7 +30,7 @@ function Login({ onLogin }) {
         return;
       }
 
-      // ✅ At this point login succeeded.
+      // At this point login succeeded.
       // Expect token + user from backend.
       if (data.token) {
         localStorage.setItem("token", data.token);
@@ -39,7 +39,7 @@ function Login({ onLogin }) {
       if (data.user) {
         localStorage.setItem("user", JSON.stringify(data.user));
         if (onLogin) {
-          onLogin(data.user);
+          onLogin(data.user);//saves the info in the app.js 
         }
       }
 

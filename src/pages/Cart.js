@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 
 export default function Cart({ cartItems, onAdd, onRemove }) {
   const navigate = useNavigate();
-  const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
+  const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);//calculates the total price
 
   return (
     <div className="cart-page">
       <h1>Your Cart</h1>
 
       {cartItems.length === 0 ? (
-        <p className="empty">Your cart is empty.</p>
+        <p className="empty">Your cart is empty.</p>//empty cart condition 
       ) : (
         <div className="cart-container">
           {cartItems.map((item) => (

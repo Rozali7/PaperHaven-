@@ -2,22 +2,22 @@ import React, { useMemo, useState } from "react";
 import "../styles/Checkout.css";
 import { useNavigate } from "react-router-dom";
 
-export default function Checkout({ cartItems, setCartItems }) {
+export default function Checkout({ cartItems, setCartItems }) {//items in app.js - clear cart after successfull order
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     address: "",
-  });
+  });//stores the info added from users 
 
-  const [orderPlaced, setOrderPlaced] = useState(false);
-  const [error, setError] = useState("");
+  const [orderPlaced, setOrderPlaced] = useState(false);// controls what to show 
+  const [error, setError] = useState("");//stores errors 
   const [isPlacing, setIsPlacing] = useState(false); // ✅ prevent double submit
   const navigate = useNavigate();
 
-  const subtotal = useMemo(() => {
+  const subtotal = useMemo(() => {//use memo calculate subtotal only when cart item changes
     if (!cartItems || cartItems.length === 0) return 0;
-    return cartItems.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 1), 0);
+    return cartItems.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 1), 0);//adds all cart items rpice and quantity 
   }, [cartItems]);
 
   // simple shipping rule (UI only) – keep it 0 to stay simple
@@ -49,18 +49,18 @@ export default function Checkout({ cartItems, setCartItems }) {
 
       // 3) Send order to backend (✅ unchanged logic)
       const res = await fetch("http://localhost:5000/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+        method: "POST",//post create a new order 
+        headers: { "Content-Type": "application/json" },//the data is in json format 
+        body: JSON.stringify({ //convert javascript into jason
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
           address: formData.address,
-          totalPrice,
+          totalPrice,// sends total price to store it in the order table
         }),
       });
 
-      const data = await res.json();
+      const data = await res.json();//converts into javascript 
 
       if (!res.ok) {
         setError(data.message || "Order failed. Please try again.");

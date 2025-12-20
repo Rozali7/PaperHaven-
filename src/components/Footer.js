@@ -36,7 +36,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Support Section */}
+        
         <div className="footer-links">
           <h4>Support</h4>
           <ul>

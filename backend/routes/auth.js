@@ -5,19 +5,15 @@ const db = require("../db");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// Helper to create JWT
+// Helper to create JWT that assures eno user is authenticated 
 function createToken(userId) {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
 }
 
-/**
- * POST /api/auth/signup
- * Body: { name, email, password }
- */
-router.post("/signup", (req, res) => {
-  const { name, email, password } = req.body;
+router.post("/signup", (req, res) => { //handle when the user joins 
+  const { name, email, password } = req.body;// recieve the data entered by the user 
 
   // Basic validation
   if (!name || !email || !password) {
@@ -43,8 +39,8 @@ router.post("/signup", (req, res) => {
 
     // 3) Insert new user
     const insertSql =
-      "INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)";
-    db.query(insertSql, [name, email, hashedPassword], (err, result) => {
+      "INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)";// prepare the query to new user 
+    db.query(insertSql, [name, email, hashedPassword], (err, result) => {// add the real results 
       if (err) {
         console.error("Error inserting new user:", err);
         return res
@@ -52,7 +48,7 @@ router.post("/signup", (req, res) => {
           .json({ message: "Something went wrong. Please try again." });
       }
 
-      const userId = result.insertId;
+      const userId = result.insertId;//retrive the newly created user ID 
       const token = createToken(userId);
 
       return res.status(201).json({
@@ -68,10 +64,6 @@ router.post("/signup", (req, res) => {
   });
 });
 
-/**
- * POST /api/auth/login
- * Body: { email, password }
- */
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -117,7 +109,7 @@ router.post("/login", (req, res) => {
   });
 });
 
-module.exports = router;
+module.exports = router;// alow server.js to use these routes 
 
 
 

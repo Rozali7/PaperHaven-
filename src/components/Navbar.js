@@ -6,7 +6,7 @@ export default function Navbar({ cartCount }) {
   return (
     <header className="navbar">
       <div className="navbar-inner">
-        {/* Logo */}
+        {/* Logo  that links to the home */}
         <Link to="/" className="navbar-logo" aria-label="Paper Haven Home">
           {/* ✅ Custom safe logo (inline SVG) */}
           <svg
