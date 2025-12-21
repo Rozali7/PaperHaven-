@@ -49,7 +49,7 @@ export default function Checkout({ cartItems, setCartItems }) {//items in app.js
 
       // 3) Send order to backend (✅ unchanged logic)
       console.log("CartItems sending:", cartItems)
-      const res = await fetch("http://localhost:5000/api/orders", {
+      const res = await fetch("https://YOUR-BACKEND.up.railway.app", {
         method: "POST",//post create a new order 
         headers: { "Content-Type": "application/json" },//the data is in json format 
         body: JSON.stringify({ //convert javascript into jason

@@ -27,7 +27,7 @@ export default function Books({ onAdd }) { // add the book to cart on add called
   const [sortMode, setSortMode] = useState("none"); // none | price-asc | price-desc
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/books") // sends a GET request to get the books from backend
+    fetch("https://YOUR-BACKEND.up.railway.app") // sends a GET request to get the books from backend
       .then((res) => res.json()) // convert response to JavaScript object/array
       .then((data) => { // data contains the books that come from database
         const list = Array.isArray(data)

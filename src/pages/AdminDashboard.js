@@ -18,10 +18,10 @@ export default function AdminDashboard({ user }) {
         setLoading(true);
 
         const [oCountRes, mCountRes, oRes, mRes] = await Promise.all([
-          fetch("http://localhost:5000/api/admin/orders/count"),
-          fetch("http://localhost:5000/api/admin/messages/count"),
-          fetch("http://localhost:5000/api/admin/orders"),
-          fetch("http://localhost:5000/api/admin/messages"),
+          fetch("https://YOUR-BACKEND.up.railway.app"),
+          fetch("https://YOUR-BACKEND.up.railway.app"),
+          fetch("https://YOUR-BACKEND.up.railway.app"),
+          fetch("https://YOUR-BACKEND.up.railway.app"),
         ]);
 
         const oCount = await oCountRes.json();

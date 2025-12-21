@@ -23,7 +23,7 @@ export default function Contact() {
       setLoading(true); //disable button while sending
 
       //send message to backend (so it can be inserted into MySQL messages table)
-      const res = await fetch("http://localhost:5000/api/contact", {
+      const res = await fetch("https://YOUR-BACKEND.up.railway.app", {
         method: "POST", //POST = send data to server
         headers: { "Content-Type": "application/json" }, //we are sending JSON
         body: JSON.stringify({
