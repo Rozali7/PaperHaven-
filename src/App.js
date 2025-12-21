@@ -11,6 +11,7 @@ import Checkout from "./pages/Checkout";
 import "./styles/theme.css";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   // 🛒 Cart state
@@ -74,6 +75,7 @@ function App() {
           path="/"
           element={<Home user={user} onLogout={handleLogout} />}
         />
+        <Route path="/admin" element={<AdminDashboard user={user} />} />
 
         <Route
           path="/books"

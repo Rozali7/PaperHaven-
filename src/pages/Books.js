@@ -19,50 +19,50 @@ const CATEGORY_BY_TITLE = {
 
 const CATEGORIES = ["All", "Fiction", "Non-Fiction", "Self-Help"];
 
-export default function Books({ onAdd }) {
-  const [books, setBooks] = useState([]);
+export default function Books({ onAdd }) { // add the book to cart on add called by the parent
+  const [books, setBooks] = useState([]); // hold and update the books
 
-  const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [search, setSearch] = useState(""); // update the search
+  const [activeCategory, setActiveCategory] = useState("All"); // control which category is chosen
   const [sortMode, setSortMode] = useState("none"); // none | price-asc | price-desc
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/books")
-      .then((res) => res.json())
-      .then((data) => {
+    fetch("http://localhost:5000/api/books") // sends a GET request to get the books from backend
+      .then((res) => res.json()) // convert response to JavaScript object/array
+      .then((data) => { // data contains the books that come from database
         const list = Array.isArray(data)
-          ? data
+          ? data // if data is already an array use it
           : Array.isArray(data?.books)
-          ? data.books
-          : Array.isArray(data?.data)
-          ? data.data
+          ? data.books // if data.books exists use that
+          : Array.isArray(data?.data) // if data.data exists use that
+          ? data.data // this prevents runtime errors that would crash the project
           : [];
 
-        setBooks(list);
+        setBooks(list); // store the books in state to display
       })
-      .catch(console.error);
-  }, []);
+      .catch(console.error); // catch any error that would occur
+  }, []); // run once when page loads
 
-  const getCategory = (book) => {
-    const raw =
+  const getCategory = (book) => { // this function determines the category of each book
+    const raw = // reads the category from the book object, even if backend uses different field names
       (book?.category || book?.Category || book?.type || "").toString().trim();
 
-    if (raw) {
-      const v = raw.toLowerCase();
-      if (v.includes("self")) return "Self-Help";
-      if (v.includes("non")) return "Non-Fiction";
-      if (v.includes("fiction")) return "Fiction";
+    if (raw) { // run only if category exists
+      const v = raw.toLowerCase(); // safe comparison
+      if (v.includes("self")) return "Self-Help"; // "self" means self-help
+      if (v.includes("non")) return "Non-Fiction"; // "non" means non-fiction
+      if (v.includes("fiction")) return "Fiction"; // fiction
     }
 
     const title = (book?.title || "").trim();
-    return CATEGORY_BY_TITLE[title] || "Fiction";
-  };
+    return CATEGORY_BY_TITLE[title] || "Fiction"; // if category doesn’t exist, decide by title map
+  }; // fiction is the default value
 
   // ✅ Always safe: books is an array
-  const bundleBooks = books.slice(0, 3);
+  const bundleBooks = books.slice(0, 3); // first three books for the bundle
 
   const addBundleToCart = (e) => {
-    e.stopPropagation();
+    e.stopPropagation(); // prevent affecting other clicks, only add the bundle
     const bundleItem = {
       id: "holiday-bundle-3for25",
       title: "🎄 Holiday Bundle (3 Books)",
@@ -70,40 +70,26 @@ export default function Books({ onAdd }) {
       image: bundleBooks[0]?.image || "",
       isBundle: true,
     };
-    onAdd(bundleItem);
+    onAdd(bundleItem); // add bundle to cart
   };
 
-  // Optional “replace one book” logic you had
-  const displayBooks = useMemo(() => {
-    return books.map((book) => {
-      if (book.title === "The Midnight Library") {
-        return {
-          ...book,
-          title: "The Book Thief",
-          author: "Markus Zusak",
-          price: 10.99,
-          image: "https://images-na.ssl-images-amazon.com/images/I/91JGwQlnu7L.jpg",
-        };
-      }
-      return book;
-    });
-  }, [books]);
-
-  // ✅ Filter + Search + Sort (WORKING)
   const filteredSortedBooks = useMemo(() => {
-    const q = search.trim().toLowerCase();
+    const q = search.trim().toLowerCase(); // normalized search text (lowercase, no spaces)
 
-    let arr = displayBooks.filter((b) => {
+    let arr = books.filter((b) => { //  filter directly from books
       const title = (b.title || "").toLowerCase();
       const author = (b.author || "").toLowerCase();
+
+      // matches search if search box is empty OR book title/author includes search text
       const matchesSearch = !q || title.includes(q) || author.includes(q);
 
-      const cat = getCategory(b);
-      const matchesCategory = activeCategory === "All" || cat === activeCategory;
+      const cat = getCategory(b); // decide this book category
+      const matchesCategory = activeCategory === "All" || cat === activeCategory; // match chosen category
 
-      return matchesSearch && matchesCategory;
+      return matchesSearch && matchesCategory; // only keep books that match both
     });
 
+    // Sort logic
     if (sortMode === "price-asc") {
       arr = [...arr].sort(
         (a, b) => Number(a.price || 0) - Number(b.price || 0)
@@ -114,12 +100,12 @@ export default function Books({ onAdd }) {
       );
     }
 
-    return arr;
-  }, [displayBooks, search, activeCategory, sortMode]);
+    return arr; // final list after search + filter + sort
+  }, [books, search, activeCategory, sortMode]); // ✅ updated dependencies
 
   // ✅ Sections (same card size always)
-  const newReleases = filteredSortedBooks.slice(0, 4);
-  const bestSellers = filteredSortedBooks.slice(4, 8);
+  const newReleases = filteredSortedBooks.slice(0, 4); // first 4 books
+  const bestSellers = filteredSortedBooks.slice(4, 8); // next 4 books
 
   const renderGrid = (list) => {
     if (!list.length) {
@@ -171,16 +157,14 @@ export default function Books({ onAdd }) {
         Discover stories that inspire, educate, and stay with you.
       </p>
 
-      {/* ✅ Search (KEEP exactly) */}
       <input
         className="books-search"
         type="text"
         placeholder="Search by book name or author..."
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => setSearch(e.target.value)} // change the search value accordingly
       />
 
-      {/* ✅ Filters + Sort */}
       <div className="books-options">
         <div className="category-filters">
           {CATEGORIES.map((c) => (
@@ -209,8 +193,7 @@ export default function Books({ onAdd }) {
         </div>
       </div>
 
-      {/* ✅ Bundle (KEEP) */}
-      {bundleBooks.length === 3 && (
+      {bundleBooks.length === 3 && ( // only show bundle if there are at least 3 books
         <div className="bundle-card">
           <div className="bundle-left">
             <span className="bundle-tag">🎄 Holiday Bundle</span>
@@ -248,7 +231,7 @@ export default function Books({ onAdd }) {
         </div>
       )}
 
-      {/* ✅ If user is searching: show ONE grid (so results are consistent) */}
+      {/*  If user is searching: show ONE grid (so results are consistent) */}
       {search.trim() ? (
         <>
           <h2 className="section-title">Search Results</h2>
@@ -266,6 +249,7 @@ export default function Books({ onAdd }) {
     </div>
   );
 }
+
 
 
 
