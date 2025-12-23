@@ -26,7 +26,7 @@ router.post("/signup", (req, res) => { //handle when the user joins
   }
 
   // 1) Check if email already exists
-  const checkSql = "SELECT id FROM users WHERE email = ?";
+  const checkSql = "SELECT id FROM users_new WHERE email = ?";
   db.query(checkSql, [email], (err, results) => {
     if (err) {
       console.error("Error checking existing user:", err);
@@ -44,7 +44,7 @@ router.post("/signup", (req, res) => { //handle when the user joins
 
     // 3) Insert new user
     const insertSql =
-      "INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)";// prepare the query to new user 
+      "INSERT INTO users_new (name, email, password_hash) VALUES (?, ?, ?)";// prepare the query to new user 
     db.query(insertSql, [name, email, hashedPassword], (err, result) => {// add the real results 
       if (err) {
         console.error("Error inserting new user:", err);
@@ -83,7 +83,7 @@ router.post("/login", (req, res) => {
       .json({ message: "Email and password are required" });
   }
 
-  const sql = "SELECT * FROM users WHERE email = ?";
+  const sql = "SELECT * FROM users_new WHERE email = ?";
   db.query(sql, [email], (err, results) => {
     if (err) {
       console.error("Error fetching user:", err);
