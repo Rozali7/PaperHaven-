@@ -2,6 +2,15 @@ require("dotenv").config();// call the env file
 const express = require("express");
 const cors = require("cors");
 
+app.use(cors({
+  origin: [
+    "https://paperhaven-production.up.railway.app",
+    "http://localhost:3000"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 const app = express();
 app.use(cors());
 app.use(express.json());
