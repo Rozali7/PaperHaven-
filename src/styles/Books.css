@@ -110,8 +110,8 @@
 /* ✅ Grid (IMPORTANT FIX: prevents "big cards" when few items) */
 .books-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 26px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
   align-items: start;
 
   /* ✅ keeps cards same size + centered when only 1–2 items */
@@ -131,7 +131,7 @@
 
   /* ✅ KEY: stops stretching on Non-Fiction/Self-Help/Search */
   width: 100%;
-  max-width: 320px;
+  max-width: 100px;
 }
 
 /* Image area */
@@ -149,7 +149,7 @@
 .shop-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   max-width: 100%;
 }
@@ -346,6 +346,16 @@
   .books-options {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+@media (max-width: 600px) {
+  .books-title {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .books-subtitle {
+    text-align: center;
   }
 }
 
