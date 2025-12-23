@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles/AdminDashboard.css";
+import {API_URL} from "../config";
 
 export default function AdminDashboard({ user }) {
   const [ordersCount, setOrdersCount] = useState(0);
@@ -18,10 +19,10 @@ export default function AdminDashboard({ user }) {
         setLoading(true);
 
         const [oCountRes, mCountRes, oRes, mRes] = await Promise.all([
-          fetch("https://paperhaven-production-773e.up.railway.app/api/admin/orders/count"),
-          fetch("https://paperhaven-production-773e.up.railway.app/api/admin/messages/count"),
-          fetch("https://paperhaven-production-773e.up.railway.app/api/admin/orders"),
-          fetch("https://paperhaven-production-773e.up.railway.app/api/admin/messages"),
+          fetch(`${API_URL}/api/admin/orders/count`),
+          fetch(`${API_URL}/api/admin/messages/count`),
+          fetch(`${API_URL}/api/admin/messages`),
+          fetch(`${API_URL}/api/admin/orders`),
         ]);
 
         const oCount = await oCountRes.json();

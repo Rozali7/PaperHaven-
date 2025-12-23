@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../styles/Auth.css";
+import {API_URL} from "../config";
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState("");//stores the email entered by the user 
@@ -16,7 +17,7 @@ function Login({ onLogin }) {
     setLoading(true);
 
     try {
-      const res = await fetch("https://paperhaven-production-773e.up.railway.app/api/auth/login", {// sends email and password to the backend 
+      const res = await fetch(`${API_URL}/api/auth/login`, {// sends email and password to the backend 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

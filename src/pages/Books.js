@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "../styles/Books.css";
+import {API_URL} from "../config";
 
 /**
  * Category rules:
@@ -27,7 +28,7 @@ export default function Books({ onAdd }) { // add the book to cart on add called
   const [sortMode, setSortMode] = useState("none"); // none | price-asc | price-desc
 
   useEffect(() => {
-    fetch("https://paperhaven-production-773e.up.railway.app/api/books")// sends a GET request to get the books from backend
+    fetch(`${API_URL}/api/books`)// sends a GET request to get the books from backend
       .then((res) => res.json()) // convert response to JavaScript object/array
       .then((data) => { // data contains the books that come from database
         const list = Array.isArray(data)

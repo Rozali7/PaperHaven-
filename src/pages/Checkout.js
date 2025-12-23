@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import "../styles/Checkout.css";
 import { useNavigate } from "react-router-dom";
-
+import {API_URL} from "../config";
 export default function Checkout({ cartItems, setCartItems }) {//items in app.js - clear cart after successfull order
   const [formData, setFormData] = useState({
     name: "",
@@ -49,7 +49,7 @@ export default function Checkout({ cartItems, setCartItems }) {//items in app.js
 
       // 3) Send order to backend (unchanged logic)
       console.log("CartItems sending:", cartItems)
-      const res = await fetch("https://paperhaven-production-773e.up.railway.app/api/orders", {
+      const res = await fetch(`${API_URL}/api/orders`, {
         method: "POST",//post create a new order 
         headers: { "Content-Type": "application/json" },//the data is in json format 
         body: JSON.stringify({ //convert javascript into jason

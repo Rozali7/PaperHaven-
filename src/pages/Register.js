@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";//used to move between pages without reloading 
 import "../styles/Auth.css";
+import {API_URL} from "../config";
 
 export default function Register({ onLogin }) {//get onlogin from the app.js 
   const navigate = useNavigate();//allows redirecting the user after login 
@@ -36,7 +37,7 @@ export default function Register({ onLogin }) {//get onlogin from the app.js
 
     try {
       setLoading(true);
-      const res = await fetch("https://paperhaven-production-773e.up.railway.app/api/auth/signup", {//sends the data to the backend 
+      const res = await fetch(`${API_URL}/api/auth/signup`, {//sends the data to the backend 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
