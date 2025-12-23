@@ -19,7 +19,7 @@ export default function AdminDashboard({ user }) {
         // ✅ use the working routes
         const [ordersRes, messagesRes] = await Promise.all([
           fetch(`${API_URL}/api/orders`),
-          fetch(`${API_URL}/api/contacts`), // GET should return messages list
+          fetch(`${API_URL}/api/contact`), // GET should return messages list
         ]);
 
         const ordersData = await ordersRes.json();
