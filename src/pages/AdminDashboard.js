@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../styles/AdminDashboard.css";
-import {API_URL} from "../config";
+import { API_URL } from "../config";
 
 export default function AdminDashboard({ user }) {
-  const [ordersCount, setOrdersCount] = useState(0);
-  const [messagesCount, setMessagesCount] = useState(0);
   const [orders, setOrders] = useState([]);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,22 +16,17 @@ export default function AdminDashboard({ user }) {
       try {
         setLoading(true);
 
-        const [oCountRes, mCountRes, oRes, mRes] = await Promise.all([
-          fetch(`${API_URL}/api/admin/orders/count`),
-          fetch(`${API_URL}/api/admin/messages/count`),
-          fetch(`${API_URL}/api/admin/messages`),
-          fetch(`${API_URL}/api/admin/orders`),
+        // ✅ use the working routes
+        const [ordersRes, messagesRes] = await Promise.all([
+          fetch(`${API_URL}/api/orders`),
+          fetch(`${API_URL}/api/contacts`), // GET should return messages list
         ]);
 
-        const oCount = await oCountRes.json();
-        const mCount = await mCountRes.json();
-        const oList = await oRes.json();
-        const mList = await mRes.json();
+        const ordersData = await ordersRes.json();
+        const messagesData = await messagesRes.json();
 
-        setOrdersCount(oCount.totalOrders || 0);
-        setMessagesCount(mCount.totalMessages || 0);
-        setOrders(Array.isArray(oList) ? oList : []);
-        setMessages(Array.isArray(mList) ? mList : []);
+        setOrders(Array.isArray(ordersData) ? ordersData : []);
+        setMessages(Array.isArray(messagesData) ? messagesData : []);
       } catch (err) {
         console.error(err);
       } finally {
@@ -67,19 +60,19 @@ export default function AdminDashboard({ user }) {
           <div className="admin-stats">
             <div className="stat-card">
               <h3>Total Orders</h3>
-              <p className="stat-number">{ordersCount}</p>
+              <p className="stat-number">{orders.length}</p>
             </div>
 
             <div className="stat-card">
               <h3>Total Messages</h3>
-              <p className="stat-number">{messagesCount}</p>
+              <p className="stat-number">{messages.length}</p>
             </div>
           </div>
 
-          {/* ✅ Tables */}
+          {/* ✅ Lists */}
           <div className="admin-grid">
             <div className="admin-card">
-              <h2> Orders</h2>
+              <h2>Orders</h2>
 
               {orders.length === 0 ? (
                 <p className="admin-empty">No orders yet.</p>
