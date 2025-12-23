@@ -1,7 +1,7 @@
 require("dotenv").config();// call the env file 
 const express = require("express");
 const cors = require("cors");
-
+const app = express();
 app.use(cors({
   origin: [
     "https://paperhaven-production.up.railway.app",
@@ -11,8 +11,6 @@ app.use(cors({
   credentials: true
 }));
 
-const app = express();
-app.use(cors());
 app.use(express.json());
 
 // Routes
