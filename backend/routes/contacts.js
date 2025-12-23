@@ -13,7 +13,7 @@ router.post("/", (req, res) => {
   }
   // ✅ GET all messages (for Admin Dashboard)
 router.get("/", (req, res) => {
-  const sql = "SELECT * FROM messages ORDER BY created_at DESC";
+  const sql = "SELECT * FROM messages_new ORDER BY created_at DESC";
   db.query(sql, (err, results) => {
     if (err) return res.status(500).json({ message: "DB error" });
     res.json(results);
@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
 
   //prepare SQL to insert the message into messages table
   const sql =
-    "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)";
+    "INSERT INTO messages_new (name, email, message) VALUES (?, ?, ?)";
 
   //execute query and send response back
   db.query(sql, [name, email, message], (err, result) => {
