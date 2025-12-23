@@ -1,40 +1,45 @@
-// backend/routes/admin.js
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-// ✅ GET total orders count
-router.get("/orders/count", (req, res) => {
-  const sql = "SELECT COUNT(*) AS totalOrders FROM orders";
-  db.query(sql, (err, results) => {
-    if (err) return res.status(500).json({ message: "Error fetching orders count" });
-    res.json(results[0]);
+/* =========================
+   POST /api/contacts
+   ========================= */
+router.post("/", (req, res) => {
+  const { name, email, message } = req.body;
+
+  if (!name || !email || !message) {
+    return res.status(400).json({ message: "All fields are required." });
+  }
+
+  const sql =
+    "INSERT INTO messages_new (name, email, message) VALUES (?, ?, ?)";
+
+  db.query(sql, [name, email, message], (err, result) => {
+    if (err) {
+      console.error("Error inserting message:", err);
+      return res.status(500).json({ message: "DB error" });
+    }
+
+    res.status(201).json({
+      message: "Message sent successfully",
+      id: result.insertId,
+    });
   });
 });
 
-// ✅ GET total messages count
-router.get("/messages/count", (req, res) => {
-  const sql = "SELECT COUNT(*) AS totalMessages FROM messages";
-  db.query(sql, (err, results) => {
-    if (err) return res.status(500).json({ message: "Error fetching messages count" });
-    res.json(results[0]);
-  });
-});
+/* =========================
+   GET /api/contacts
+   ========================= */
+router.get("/", (req, res) => {
+  const sql = "SELECT * FROM messages_new ORDER BY id DESC";
 
-// ✅ GET all orders (latest first)
-router.get("/orders", (req, res) => {
-  const sql = "SELECT * FROM orders ORDER BY id DESC";
   db.query(sql, (err, results) => {
-    if (err) return res.status(500).json({ message: "Error fetching orders" });
-    res.json(results);
-  });
-});
+    if (err) {
+      console.error("Error fetching messages:", err);
+      return res.status(500).json({ message: "DB error" });
+    }
 
-// ✅ GET all messages (latest first)
-router.get("/messages", (req, res) => {
-  const sql = "SELECT * FROM messages ORDER BY id DESC";
-  db.query(sql, (err, results) => {
-    if (err) return res.status(500).json({ message: "Error fetching messages" });
     res.json(results);
   });
 });
