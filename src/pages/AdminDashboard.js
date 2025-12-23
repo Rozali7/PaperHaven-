@@ -18,10 +18,10 @@ export default function AdminDashboard({ user }) {
         setLoading(true);
 
         const [oCountRes, mCountRes, oRes, mRes] = await Promise.all([
-          fetch("https://YOUR-BACKEND.up.railway.app"),
-          fetch("https://YOUR-BACKEND.up.railway.app"),
-          fetch("https://YOUR-BACKEND.up.railway.app"),
-          fetch("https://YOUR-BACKEND.up.railway.app"),
+          fetch("https://paperhaven-production-773e.up.railway.app/api/admin/orders/count"),
+          fetch("https://paperhaven-production-773e.up.railway.app/api/admin/messages/count"),
+          fetch("https://paperhaven-production-773e.up.railway.app/api/admin/orders"),
+          fetch("https://paperhaven-production-773e.up.railway.app/api/admin/messages"),
         ]);
 
         const oCount = await oCountRes.json();

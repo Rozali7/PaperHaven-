@@ -47,9 +47,9 @@ export default function Checkout({ cartItems, setCartItems }) {//items in app.js
     try {
       setIsPlacing(true);
 
-      // 3) Send order to backend (✅ unchanged logic)
+      // 3) Send order to backend (unchanged logic)
       console.log("CartItems sending:", cartItems)
-      const res = await fetch("https://YOUR-BACKEND.up.railway.app", {
+      const res = await fetch("https://paperhaven-production-773e.up.railway.app/api/orders", {
         method: "POST",//post create a new order 
         headers: { "Content-Type": "application/json" },//the data is in json format 
         body: JSON.stringify({ //convert javascript into jason
