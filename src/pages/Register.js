@@ -30,13 +30,12 @@ export default function Register({ onLogin }) {//get onlogin from the app.js
     }
 
     if (form.password !== form.confirmPassword) {
-    //       setError("Passwords do not match.");
+     setError("Passwords do not match.");
       return;
     }
 
     try {
       setLoading(true);
-signup
       const res = await fetch("https://paperhaven-production-773e.up.railway.app/api/auth/signup", {//sends the data to the backend 
         method: "POST",
         headers: { "Content-Type": "application/json" },
