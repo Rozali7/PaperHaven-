@@ -24,7 +24,7 @@ export default function Contact() {
       setLoading(true); //disable button while sending
 
       //send message to backend (so it can be inserted into MySQL messages table)
-      const res = await fetch(`${API_URL}/api/contact`, {
+      const res = await fetch(`${API_URL}/api/contacts`, {
         method: "POST", //POST = send data to server
         headers: { "Content-Type": "application/json" }, //we are sending JSON
         body: JSON.stringify({
