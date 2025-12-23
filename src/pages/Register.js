@@ -36,8 +36,8 @@ export default function Register({ onLogin }) {//get onlogin from the app.js
 
     try {
       setLoading(true);
-
-      const res = await fetch("https://paperhaven-production-773e.up.railway.app/api/auth", {//sends the data to the backend 
+signup
+      const res = await fetch("https://paperhaven-production-773e.up.railway.app/api/auth/signup", {//sends the data to the backend 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

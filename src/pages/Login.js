@@ -16,7 +16,7 @@ function Login({ onLogin }) {
     setLoading(true);
 
     try {
-      const res = await fetch("https://paperhaven-production-773e.up.railway.app/api/auth", {// sends email and password to the backend 
+      const res = await fetch("https://paperhaven-production-773e.up.railway.app/api/auth/login", {// sends email and password to the backend 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
