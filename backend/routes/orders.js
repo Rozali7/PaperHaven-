@@ -5,7 +5,7 @@ const db = require("../db");
 
 // ✅ GET all orders (for admin dashboard list)
 router.get("/", (req, res) => {
-  const sql = "SELECT * FROM orders_new ORDER BY created_at DESC";
+  const sql = "SELECT * FROM orders_new1 ORDER BY created_at DESC";
   db.query(sql, (err, results) => {
     if (err) {
       console.error("Error fetching orders:", err); //debug
@@ -47,7 +47,7 @@ router.post("/", (req, res) => {
 
   //1) insert into orders table first
   const sqlOrder =
-    "INSERT INTO orders_new (customer_name, customer_email, customer_phone, customer_address, total_price) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO orders_new1 (customer_name, customer_email, customer_phone, customer_address, total_price) VALUES (?, ?, ?, ?, ?)";
 
   db.query(
     sqlOrder,
@@ -106,7 +106,7 @@ router.delete("/:id", (req, res) => {
     }
 
     //then delete the order
-    db.query("DELETE FROM orders_new WHERE id = ?", [orderId], (err2) => {
+    db.query("DELETE FROM orders_new1 WHERE id = ?", [orderId], (err2) => {
       if (err2) {
         console.error("Error deleting order:", err2); //debug
         return res.status(500).json({ message: "DB error deleting order" });
