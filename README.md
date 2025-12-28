@@ -1,70 +1,121 @@
-# Getting Started with Create React App
+# Paper Haven 📚
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Paper Haven is a full‑stack online bookstore built with **React + Node.js + Express + MySQL**.  
+Users can browse books, add items to a cart, place orders, and send contact messages. An admin dashboard displays recent orders and messages.
 
-## Available Scripts
+## Features
+- Browse books (list, search/filter)
+- Cart + checkout (creates **orders** and **order_items** in MySQL)
+- Contact form (saves messages to MySQL)
+- Authentication (signup/login)
+- Admin dashboard (recent orders + messages)
 
-In the project directory, you can run:
+## Tech Stack
+- **Frontend:** React, CSS
+- **Backend:** Node.js, Express
+- **Database:** MySQL (Railway)
+- **Deployment:** Railway (frontend + backend), GitHub
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Project Structure (high level)
+```
+/frontend
+  /src
+    /pages, /components, /styles
+/backend
+  server.js
+  /routes
+  db.js
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Environment Variables
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Backend (`/backend/.env`)
+Create a `.env` file inside the backend folder:
 
-### `npm run build`
+```
+# Railway provides DATABASE_URL (or MYSQL_URL depending on setup)
+DATABASE_URL=your_railway_mysql_url_here
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Optional (if you use it)
+PORT=5000
+JWT_SECRET=your_secret_here
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Frontend (`/frontend/src/config.js`)
+Make sure your frontend points to the backend:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```js
+export const API_URL =
+  process.env.REACT_APP_API_URL || "http://localhost:5000";
+```
 
-### `npm run eject`
+When deployed, set `REACT_APP_API_URL` in Railway to your backend URL.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Database Tables (summary)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+**orders_new**
+- id (AUTO_INCREMENT PRIMARY KEY)
+- customer_name, customer_email, customer_phone, customer_address
+- total_price
+- created_at
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+**order_items**
+- id (AUTO_INCREMENT PRIMARY KEY)
+- order_id (FK → orders_new.id)
+- book_id, title, price, qty, image
 
-## Learn More
+**messages_new**
+- id (AUTO_INCREMENT PRIMARY KEY)
+- name, email, message
+- created_at
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+(You may also have `users` and `books` tables depending on your implementation.)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Run Locally
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 1) Clone
+```bash
+git clone <your-repo-url>
+cd <your-repo-folder>
+```
 
-### Analyzing the Bundle Size
+### 2) Backend
+```bash
+cd backend
+npm install
+npm run start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 3) Frontend
+```bash
+cd ../frontend
+npm install
+npm start
+```
 
-### Making a Progressive Web App
+Open: `http://localhost:3000`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## Deployment (Railway)
+1. Create a Railway project.
+2. Add a MySQL database and copy its connection URL.
+3. Deploy the backend service and set `DATABASE_URL` in Railway variables.
+4. Deploy the frontend service and set `REACT_APP_API_URL` to your backend public URL.
+5. Verify:
+   - `GET /api/books` returns books
+   - `POST /api/orders` creates orders + items
+   - `POST /api/contact` stores messages
+   - Admin page loads orders/messages
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Author : Rozali Kaiss 
