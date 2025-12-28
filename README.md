@@ -118,4 +118,4 @@ Open: `http://localhost:3000`
 
 ---
 
-## Author : Rozali Kaiss 
+## Author : Rozali Kaiss
